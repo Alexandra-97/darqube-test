@@ -1,10 +1,13 @@
-import React from 'react';
+import React from "react";
+import { AppLayout } from "./components/layouts/AppLayout";
+import { News } from "./modules/news/News";
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-    </div>
+    <AppLayout>
+      <News />
+    </AppLayout>
   );
-}
+};
 
 export default App;
