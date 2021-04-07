@@ -11,7 +11,7 @@ export const News = () => {
 
   useEffect(() => {
     dispatch(getNews());
-  }, []);
+  }, [dispatch]);
 
-  return <NewsCard />;
+  return <>{news.length > 0 && <NewsCard item={news[2]} />}</>;
 };

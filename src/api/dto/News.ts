@@ -8,4 +8,5 @@ export interface News {
   source: string;
   summary: string;
   url: string;
+  bookmark: boolean;
 }
