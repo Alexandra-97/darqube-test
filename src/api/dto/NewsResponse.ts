@@ -1,4 +1,4 @@
-export interface News {
+export interface NewsResponse {
   category: string;
   datetime: number;
   headline: string;
@@ -8,5 +8,4 @@ export interface News {
   source: string;
   summary: string;
   url: string;
-  bookmark: boolean;
 }

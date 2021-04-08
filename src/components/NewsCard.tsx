@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { News } from "../api/dto/News";
+import styled, { css } from "styled-components";
 import { timestampToDate } from "../core/helpers/timestampToDate";
 import { ReactComponent as BookmarkIcon } from "../assets/icons/bookmark.svg";
 import { ReactComponent as FilledBookmarkIcon } from "../assets/icons/filledBookmark.svg";
+import { FullNews } from "../modules/news/newsSlice";
 
 interface Props {
-  item: News;
+  item: FullNews;
   isLatest?: boolean;
 }
 
@@ -25,7 +25,7 @@ export const NewsCard = ({
   isLatest,
 }: Props) => {
   return (
-    <Card url={image}>
+    <Card isLatest={isLatest}>
       <Image alt={summary} src={image} />
       <Content>
         <ContentHeader>
@@ -51,11 +51,19 @@ export const NewsCard = ({
   );
 };
 
-const Card = styled.div<{ url: string }>`
+const Card = styled.div<{ isLatest?: boolean }>`
   position: relative;
   width: 280px;
   height: 425px;
-  border-radius: 6px;
+
+  ${({ isLatest }) =>
+    isLatest &&
+    css`
+      height: 628px;
+    `}
+  & > * {
+    border-radius: 6px;
+  }
 `;
 
 const Image = styled.img`
@@ -148,6 +156,7 @@ const Bookmark = styled.i`
   width: 12px;
   align-self: center;
   cursor: pointer;
+
   svg {
     width: 100%;
     height: 100%;

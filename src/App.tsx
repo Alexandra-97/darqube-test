@@ -1,13 +1,8 @@
 import React from "react";
-import { AppLayout } from "./components/layouts/AppLayout";
-import { News } from "./modules/news/News";
+import { NewsPage } from "./modules/news/NewsPage";
 
 export const App = () => {
-  return (
-    <AppLayout>
-      <News />
-    </AppLayout>
-  );
+  return <NewsPage />;
 };
 
 export default App;

@@ -1,16 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { News } from "../../api/dto/News";
-import { RootState } from "../../core/redux/rootReducer";
+import { NewsResponse } from "../../api/dto/NewsResponse";
 import { getNews } from "./newsActions";
+
+export type FullNews = NewsResponse & { bookmark?: boolean };
+
+export type News = {
+  [key: number]: FullNews;
+};
+
+export interface Pagination {
+  currentPage: number;
+  pageSize: number;
+}
 
 interface NewsState {
   loading: boolean;
-  news: Array<News>;
+  news?: News;
+  bookmarks?: News;
+  search?: string;
+  pagination: Pagination;
 }
+
+const defaultPaginate: Pagination = {
+  currentPage: 0,
+  pageSize: 6,
+};
 
 const initialState: NewsState = {
   loading: false,
-  news: [],
+  pagination: defaultPaginate,
 };
 
 const newsSlice = createSlice({
@@ -21,16 +39,14 @@ const newsSlice = createSlice({
     builder.addCase(getNews.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getNews.fulfilled, (state, action) => {
+    builder.addCase(getNews.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.news = action.payload;
+      state.news = payload;
     });
     builder.addCase(getNews.rejected, (state) => {
       state.loading = false;
     });
   },
 });
-
-export const newsSelector = (state: RootState) => state.news;
 
 export const newsReducer = newsSlice.reducer;

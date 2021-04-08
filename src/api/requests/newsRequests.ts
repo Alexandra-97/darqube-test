@@ -1,8 +1,8 @@
 import { baseFetch } from "../baseFetch";
-import { News } from "../dto/News";
+import { NewsResponse } from "../dto/NewsResponse";
 
 const getNews = async () => {
-  return await baseFetch<Array<News>>({
+  return await baseFetch<Array<NewsResponse>>({
     method: "GET",
   });
 };
