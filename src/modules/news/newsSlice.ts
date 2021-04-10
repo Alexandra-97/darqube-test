@@ -34,7 +34,11 @@ const initialState: NewsState = {
 const newsSlice = createSlice({
   name: "news",
   initialState,
-  reducers: {},
+  reducers: {
+    search(state, { payload }) {
+      state.search = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getNews.pending, (state) => {
       state.loading = true;
@@ -50,3 +54,5 @@ const newsSlice = createSlice({
 });
 
 export const newsReducer = newsSlice.reducer;
+
+export const newsActions = newsSlice.actions;

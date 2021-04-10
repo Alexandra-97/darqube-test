@@ -3,6 +3,7 @@ import { timestampToDate } from "../core/helpers/timestampToDate";
 import { ReactComponent as BookmarkIcon } from "../assets/icons/bookmark.svg";
 import { ReactComponent as FilledBookmarkIcon } from "../assets/icons/filledBookmark.svg";
 import { FullNews } from "../modules/news/newsSlice";
+import { deviceSize } from "../assets/theme/device";
 
 interface Props {
   item: FullNews;
@@ -10,27 +11,16 @@ interface Props {
 }
 
 export const NewsCard = ({
-  item: {
-    id,
-    category,
-    image,
-    url,
-    summary,
-    datetime,
-    related,
-    headline,
-    source,
-    bookmark,
-  },
+  item: { image, url, summary, datetime, related, headline, source, bookmark },
   isLatest,
 }: Props) => {
   return (
-    <Card isLatest={isLatest}>
+    <Card href={url} isLatest={isLatest} target={"_blank"}>
       <Image alt={summary} src={image} />
       <Content>
         <ContentHeader>
           <Related>{related}</Related>
-          {isLatest && <LatestMark>{"Latest research"}</LatestMark>}
+          {isLatest && <LatestMark>{"Latest news"}</LatestMark>}
         </ContentHeader>
         <ContentFooter>
           <Headline>{headline}</Headline>
@@ -51,15 +41,18 @@ export const NewsCard = ({
   );
 };
 
-const Card = styled.div<{ isLatest?: boolean }>`
+const Card = styled.a<{ isLatest?: boolean }>`
   position: relative;
-  width: 280px;
   height: 425px;
-
   ${({ isLatest }) =>
     isLatest &&
     css`
-      height: 628px;
+      max-width: 380px;
+      height: 500px;
+      @media screen and ${deviceSize.laptopL} {
+        max-width: 478px;
+        height: 628px;
+      }
     `}
   & > * {
     border-radius: 6px;
@@ -132,7 +125,12 @@ const CardNav = styled.div`
   justify-content: space-between;
 `;
 
-const Info = styled.div``;
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: calc(100% - 12px);
+`;
 
 const Timestamp = styled.span`
   font-size: 12px;
@@ -145,7 +143,10 @@ const Divider = styled.span`
   margin-right: 17px;
 `;
 
-const Source = styled.span`
+const Source = styled.div`
+  max-width: calc(100% - 90px);
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: bold;
   font-size: 12px;
   opacity: 0.35;
@@ -154,6 +155,7 @@ const Source = styled.span`
 const Bookmark = styled.i`
   height: 12px;
   width: 12px;
+  min-width: 12px;
   align-self: center;
   cursor: pointer;
 

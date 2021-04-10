@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Search } from "./ui/Search";
 
 export const Header = () => {
   return (
@@ -7,12 +8,12 @@ export const Header = () => {
         <MenuItem>News</MenuItem>
         <MenuItem>Bookmarks</MenuItem>
       </Menu>
-      <Search>S</Search>
+      <Search />
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled.header`
   padding: 25px 0;
   display: flex;
   justify-content: space-between;
@@ -29,5 +30,3 @@ const MenuItem = styled.li`
   font-size: 28px;
   margin-right: 20px;
 `;
-
-const Search = styled.div``;

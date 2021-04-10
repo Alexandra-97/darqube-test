@@ -10,7 +10,10 @@ const transformNews = (news: News) => {
 };
 
 const searchFilter = (news: Array<FullNews>, search: string) => {
-  return news;
+  return news.filter(
+    ({ headline, summary }) =>
+      headline.includes(search) || summary.includes(search)
+  );
 };
 
 const paginateData = (news: Array<FullNews>, paginateOptions: Pagination) => {

@@ -1,10 +1,12 @@
 body {
   font-family: "Ubuntu", sans-serif;
 }
-
 :root {
-  --white: #FFFFFF;
+  --white: #ffffff;
+  --lightestGrey: #d6d6d6;
+  --lightGrey: #686868;
   --grey: #242525;
+  --darkGrey: #191818;
   --red: #b73556;
 }
 
@@ -18,4 +20,3 @@ body {
   font-weight: normal;
   -webkit-tap-highlight-color: transparent;
 }
-
