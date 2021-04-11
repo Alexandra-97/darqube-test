@@ -1,14 +1,19 @@
-import styled from "styled-components";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { Header } from "../Header";
 import { deviceSize } from "../../assets/theme/device";
 import { Footer } from "../Footer";
+import { newsSelector } from "../../modules/news/newsSelectors";
+import { Spinner } from "../Spinner";
 
 export const AppLayout: FC = ({ children }) => {
+  const { loading } = useSelector(newsSelector);
+
   return (
     <Container>
       <Header />
-      <ContentWrapper>{children}</ContentWrapper>
+      <ContentWrapper>{loading ? <Spinner /> : children}</ContentWrapper>
       <Footer />
     </Container>
   );
@@ -28,5 +33,6 @@ const Container = styled.div`
 `;
 
 const ContentWrapper = styled.main`
+  display: flex;
   flex: 1;
 `;

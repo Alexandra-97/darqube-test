@@ -1,9 +1,12 @@
+import { MouseEvent } from "react";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import { timestampToDate } from "../core/helpers/timestampToDate";
 import { ReactComponent as BookmarkIcon } from "../assets/icons/bookmark.svg";
 import { ReactComponent as FilledBookmarkIcon } from "../assets/icons/filledBookmark.svg";
-import { FullNews } from "../modules/news/newsSlice";
+import { FullNews, newsActions } from "../modules/news/newsSlice";
 import { deviceSize } from "../assets/theme/device";
+import { AppDispatch } from "../core/redux/store";
 
 interface Props {
   item: FullNews;
@@ -11,9 +14,25 @@ interface Props {
 }
 
 export const NewsCard = ({
-  item: { image, url, summary, datetime, related, headline, source, bookmark },
+  item: {
+    id,
+    image,
+    url,
+    summary,
+    datetime,
+    related,
+    headline,
+    source,
+    bookmark,
+  },
   isLatest,
 }: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const handleBookmarkClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    dispatch(newsActions.addBookmark(id));
+  };
+
   return (
     <Card href={url} isLatest={isLatest} target={"_blank"}>
       <Image alt={summary} src={image} />
@@ -31,7 +50,7 @@ export const NewsCard = ({
               <Divider>{"|"}</Divider>
               <Source>{source}</Source>
             </Info>
-            <Bookmark>
+            <Bookmark onClick={handleBookmarkClick}>
               {bookmark ? <FilledBookmarkIcon /> : <BookmarkIcon />}
             </Bookmark>
           </CardNav>
@@ -47,6 +66,7 @@ const Card = styled.a<{ isLatest?: boolean }>`
   ${({ isLatest }) =>
     isLatest &&
     css`
+      width: 100%;
       max-width: 380px;
       height: 500px;
       @media screen and ${deviceSize.laptopL} {
@@ -56,6 +76,9 @@ const Card = styled.a<{ isLatest?: boolean }>`
     `}
   & > * {
     border-radius: 6px;
+  }
+  &:hover {
+    opacity: 0.9;
   }
 `;
 

@@ -38,6 +38,12 @@ const newsSlice = createSlice({
     search(state, { payload }) {
       state.search = payload;
     },
+    addBookmark(state, { payload }) {
+      if (state.news) {
+        const targetNews = state.news[payload];
+        targetNews.bookmark = !targetNews.bookmark;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getNews.pending, (state) => {

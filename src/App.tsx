@@ -1,11 +1,17 @@
 import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { NewsPage } from "./modules/news/NewsPage";
-import { BrowserRouter } from "react-router-dom";
+
+//TODO:  clear store on push page, empty component, search in store
 
 export const App = () => {
   return (
     <BrowserRouter>
-      <NewsPage />
+      <Switch>
+        <Route path={"/"}>
+          <NewsPage />
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 };
